@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+
+
+    <div class="col">
+      <h2 class="section-title">User details</h2>
+      <form [formGroup]="registroForm" (ngSubmit)="onSubmitUserDetails(registroForm.value)">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Full Name" formControlName="fullname" required>
+          <mat-error *ngFor="let validation of validation_messages.fullname">
+            <mat-error class="error-message"
+              *ngIf="registroForm.get('fullname').hasError(validation.type) && (registroForm.get('fullname').dirty || registroForm.get('fullname').touched)">
+              {{validation.message}}</mat-error>
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Gender">
+            <mat-option *ngFor="let gender of genders" [value]="gender">
+              {{ gender }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngFor="let validation of validation_messages.gender">
+            <mat-error class="error-message"
+              *ngIf="registroForm.get('gender').hasError(validation.type) && (registroForm.get('gender').dirty || registroForm.get('gender').touched)">
+              {{validation.message}}</mat-error>
+          </mat-error>
+        </mat-form-field>
+
+
+        <div formGroupName="country_phone" class="row">
+          <mat-form-field class="full-width col-6">
+            <mat-select formControlName="country" placeholder="Country">
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="full-width col-6">
+            <input matInput placeholder="Phone" type="tel" formControlName="phone" required>
+            <mat-hint align="start"><strong>Mobile:</strong> {{
+              registroForm.value.country_phone.country.sampleMobilePhone }}</mat-hint>
+            <mat-hint align="end"><strong>Fixed:</strong> {{
+              registroForm.value.country_phone.country.sampleFixedPhone }}</mat-hint>
+            <mat-error *ngFor="let validation of validation_messages.phone">
+              <mat-error class="error-message" class="error-message"
+                *ngIf="registroForm.get('country_phone').get('phone').hasError(validation.type) && (registroForm.get('country_phone').get('phone').dirty || registroForm.get('country_phone').get('phone').touched)">
+                {{ validation.message }}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+
+
+
+
+        <button class="submit-btn" color="primary" mat-raised-button type="submit" [disabled]="!registroForm.valid">
+          Submit
+        </button>
+
+      </form>
+    </div>
+
+
+    <pre>
+      {{registroForm.value | json}}
+    </pre>
+
+  </div>
+</div>
