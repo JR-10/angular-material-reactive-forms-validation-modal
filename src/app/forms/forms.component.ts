@@ -29,12 +29,6 @@ export class FormsComponent implements OnInit {
 
   productos = ['MP001', 'MP002', 'MP003'];
 
-  countries = [
-    new Country('AR', 'Argentina'),
-    new Country('UY', 'Uruguay'),
-    new Country('US', 'United States')
-  ];
-
   validation_messages = {
     productId: [{ type: 'required', message: 'Please select your gender' }],
     secretName: [
@@ -124,26 +118,13 @@ export class FormsComponent implements OnInit {
     ]
   };
 
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit() {
+  constructor(private fb: FormBuilder) {
     this.createForms();
   }
 
+  ngOnInit() {}
+
   createForms() {
-    // country & phone validation_messages
-    let country = new FormControl('', Validators.required);
-
-    let phone = new FormControl('', {
-      validators: Validators.compose([Validators.required])
-    });
-
-    this.country_phone_group = new FormGroup({
-      country: country,
-      phone: phone
-    });
-
-    // user details form validations
     this.registroForm = this.fb.group({
       reportConfiguration: this.fb.group({
         productId: new FormControl('', [Validators.required]),
@@ -163,34 +144,18 @@ export class FormsComponent implements OnInit {
           Validators.required,
           Validators.maxLength(200)
         ])
-      })
-
-      // gender: new FormControl('', Validators.required),
-      // country_phone: this.country_phone_group
+      }),
+      operations: this.fb.array([this.createTicket()])
     });
+  }
 
-    // user links form validations
-    this.accountDetailsForm = this.fb.group({
-      username: new FormControl(
-        '',
-        Validators.compose([
-          UsernameValidator.validUsername,
-          Validators.maxLength(25),
-          Validators.minLength(5),
-          Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$'),
-          Validators.required
-        ])
-      ),
+  createTicket(): FormGroup {
+    return this.fb.group({
+      // keyParameter: [null, Validators.required],
+      // valueParameter: [null, Validators.required],
 
-      email: new FormControl(
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-        ])
-      ),
-      matching_passwords: this.matching_passwords_group,
-      terms: new FormControl(false, Validators.pattern('true'))
+      keyParameter: [null],
+      valueParameter: [null]
     });
   }
 
