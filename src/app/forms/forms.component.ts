@@ -27,7 +27,7 @@ export class FormsComponent implements OnInit {
   matching_passwords_group: FormGroup;
   country_phone_group: FormGroup;
 
-  genders = ['Masculino', 'Femenino'];
+  productos = ['MP001', 'MP002', 'MP003'];
 
   countries = [
     new Country('AR', 'Argentina'),
@@ -36,7 +36,35 @@ export class FormsComponent implements OnInit {
   ];
 
   validation_messages = {
-    fullname: [{ type: 'required', message: 'Full name is required' }],
+    productId: [{ type: 'required', message: 'Please select your gender' }],
+    secretName: [
+      { type: 'required', message: 'Full name is required' },
+      {
+        type: 'maxlength',
+        message: 'secretName cannot be more than 200 characters long'
+      }
+    ],
+    bucketS3: [
+      { type: 'required', message: 'Full name is required' },
+      {
+        type: 'maxlength',
+        message: 'bucketS3 cannot be more than 200 characters long'
+      }
+    ],
+    dialect: [
+      { type: 'required', message: 'Full name is required' },
+      {
+        type: 'maxlength',
+        message: 'dialect cannot be more than 200 characters long'
+      }
+    ],
+    driverClassName: [
+      { type: 'required', message: 'Full name is required' },
+      {
+        type: 'maxlength',
+        message: 'driverClassName cannot be more than 200 characters long'
+      }
+    ],
     bio: [
       {
         type: 'maxlength',
@@ -117,10 +145,28 @@ export class FormsComponent implements OnInit {
 
     // user details form validations
     this.registroForm = this.fb.group({
-      fullname: ['', Validators.required],
+      reportConfiguration: this.fb.group({
+        productId: new FormControl('', [Validators.required]),
+        secretName: new FormControl('', [
+          Validators.required,
+          Validators.maxLength(200)
+        ]),
+        bucketS3: new FormControl('', [
+          Validators.required,
+          Validators.maxLength(200)
+        ]),
+        dialect: new FormControl('', [
+          Validators.required,
+          Validators.maxLength(200)
+        ]),
+        driverClassName: new FormControl('', [
+          Validators.required,
+          Validators.maxLength(200)
+        ])
+      })
 
-      gender: new FormControl('', Validators.required),
-      country_phone: this.country_phone_group
+      // gender: new FormControl('', Validators.required),
+      // country_phone: this.country_phone_group
     });
 
     // user links form validations
@@ -154,5 +200,9 @@ export class FormsComponent implements OnInit {
 
   onSubmitUserDetails(value) {
     console.log(value);
+  }
+
+  clear() {
+    this.registroForm.reset();
   }
 }

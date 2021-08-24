@@ -3,19 +3,64 @@
 
 
     <div class="col">
-      <h2 class="section-title">User details</h2>
+      <h2 class="section-title">Ejemplo Registro</h2>
       <form [formGroup]="registroForm" (ngSubmit)="onSubmitUserDetails(registroForm.value)">
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Full Name" formControlName="fullname" required>
-          <mat-error *ngFor="let validation of validation_messages.fullname">
-            <mat-error class="error-message"
-              *ngIf="registroForm.get('fullname').hasError(validation.type) && (registroForm.get('fullname').dirty || registroForm.get('fullname').touched)">
-              {{validation.message}}</mat-error>
-          </mat-error>
-        </mat-form-field>
+
+        <div formGroupName="reportConfiguration" class="row">
+
+          <mat-form-field class="full-width col-12">
+            <mat-select placeholder="Producto" formControlName="productId">
+              <mat-option *ngFor="let producto of productos" [value]="producto">
+                {{ producto }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngFor="let validation of validation_messages.productId">
+              <mat-error class="error-message"
+                *ngIf="registroForm.get('reportConfiguration').get('productId').hasError(validation.type) && (registroForm.get('reportConfiguration').get('productId').dirty || registroForm.get('reportConfiguration').get('productId').touched)">
+                {{validation.message}}</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width col-6">
+            <input matInput placeholder="secretName" formControlName="secretName" required>
+            <mat-error *ngFor="let validation of validation_messages.secretName">
+              <mat-error class="error-message"
+                *ngIf="registroForm.get('reportConfiguration').get('secretName').hasError(validation.type) &&   (registroForm.get('reportConfiguration').get('secretName').dirty || registroForm.get('reportConfiguration').get('secretName').touched)">
+                {{validation.message}}</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width col-6">
+            <input matInput placeholder="bucketS3" formControlName="bucketS3" required>
+            <mat-error *ngFor="let validation of validation_messages.bucketS3">
+              <mat-error class="error-message"
+                *ngIf="registroForm.get('reportConfiguration').get('bucketS3').hasError(validation.type) &&   (registroForm.get('reportConfiguration').get('bucketS3').dirty || registroForm.get('reportConfiguration').get('bucketS3').touched)">
+                {{validation.message}}</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width col-6">
+            <input matInput placeholder="dialect" formControlName="dialect" required>
+            <mat-error *ngFor="let validation of validation_messages.dialect">
+              <mat-error class="error-message"
+                *ngIf="registroForm.get('reportConfiguration').get('dialect').hasError(validation.type) &&   (registroForm.get('reportConfiguration').get('dialect').dirty || registroForm.get('reportConfiguration').get('dialect').touched)">
+                {{validation.message}}</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width col-6">
+            <input matInput placeholder="driverClassName" formControlName="driverClassName" required>
+            <mat-error *ngFor="let validation of validation_messages.driverClassName">
+              <mat-error class="error-message"
+                *ngIf="registroForm.get('reportConfiguration').get('driverClassName').hasError(validation.type) &&   (registroForm.get('reportConfiguration').get('driverClassName').dirty || registroForm.get('reportConfiguration').get('driverClassName').touched)">
+                {{validation.message}}</mat-error>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
 
 
-        <mat-form-field class="full-width">
+        <!-- <mat-form-field class="full-width">
           <mat-select placeholder="Gender">
             <mat-option *ngFor="let gender of genders" [value]="gender">
               {{ gender }}
@@ -26,9 +71,9 @@
               *ngIf="registroForm.get('gender').hasError(validation.type) && (registroForm.get('gender').dirty || registroForm.get('gender').touched)">
               {{validation.message}}</mat-error>
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
 
-
+        <!-- 
         <div formGroupName="country_phone" class="row">
           <mat-form-field class="full-width col-6">
             <mat-select formControlName="country" placeholder="Country">
@@ -50,7 +95,7 @@
               </mat-error>
             </mat-error>
           </mat-form-field>
-        </div>
+        </div> -->
 
 
 
@@ -59,14 +104,19 @@
         <button class="submit-btn" color="primary" mat-raised-button type="submit" [disabled]="!registroForm.valid">
           Submit
         </button>
+        <button class="submit-btn" color="second" mat-raised-button (click)="clear()">
+          Clear
+        </button>
 
       </form>
     </div>
 
 
-    <pre>
-      result 2: {{registroForm.value | json}}
-    </pre>
+
 
   </div>
 </div>
+
+<pre>
+  {{registroForm.value | json}}
+</pre>
