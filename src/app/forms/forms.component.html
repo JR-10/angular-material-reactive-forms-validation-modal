@@ -6,20 +6,20 @@
       <h2 class="section-title">Ejemplo Registro</h2>
       <form [formGroup]="registroForm" (ngSubmit)="onSubmitUserDetails(registroForm.value)">
 
-        <div formGroupName="reportConfiguration" class="row">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Producto" formControlName="productId">
+            <mat-option *ngFor="let producto of productos" [value]="producto">
+              {{ producto }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngFor="let validation of validation_messages.productId">
+            <mat-error class="error-message"
+              *ngIf="registroForm.get('productId').hasError(validation.type) && (registroForm.get('productId').dirty || registroForm.get('productId').touched)">
+              {{validation.message}}</mat-error>
+          </mat-error>
+        </mat-form-field>
 
-          <mat-form-field class="full-width col-12">
-            <mat-select placeholder="Producto" formControlName="productId">
-              <mat-option *ngFor="let producto of productos" [value]="producto">
-                {{ producto }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngFor="let validation of validation_messages.productId">
-              <mat-error class="error-message"
-                *ngIf="registroForm.get('reportConfiguration').get('productId').hasError(validation.type) && (registroForm.get('reportConfiguration').get('productId').dirty || registroForm.get('reportConfiguration').get('productId').touched)">
-                {{validation.message}}</mat-error>
-            </mat-error>
-          </mat-form-field>
+        <div formGroupName="reportConfiguration" class="row">
 
           <mat-form-field class="full-width col-6">
             <input matInput placeholder="secretName" formControlName="secretName" required>
@@ -58,48 +58,6 @@
           </mat-form-field>
 
         </div>
-
-
-        <!-- <mat-form-field class="full-width">
-          <mat-select placeholder="Gender">
-            <mat-option *ngFor="let gender of genders" [value]="gender">
-              {{ gender }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngFor="let validation of validation_messages.gender">
-            <mat-error class="error-message"
-              *ngIf="registroForm.get('gender').hasError(validation.type) && (registroForm.get('gender').dirty || registroForm.get('gender').touched)">
-              {{validation.message}}</mat-error>
-          </mat-error>
-        </mat-form-field> -->
-
-        <!-- 
-        <div formGroupName="country_phone" class="row">
-          <mat-form-field class="full-width col-6">
-            <mat-select formControlName="country" placeholder="Country">
-              <mat-option *ngFor="let country of countries" [value]="country">
-                {{ country.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="full-width col-6">
-            <input matInput placeholder="Phone" type="tel" formControlName="phone" required>
-            <mat-hint align="start"><strong>Mobile:</strong> {{
-              registroForm.value.country_phone.country.sampleMobilePhone }}</mat-hint>
-            <mat-hint align="end"><strong>Fixed:</strong> {{
-              registroForm.value.country_phone.country.sampleFixedPhone }}</mat-hint>
-            <mat-error *ngFor="let validation of validation_messages.phone">
-              <mat-error class="error-message" class="error-message"
-                *ngIf="registroForm.get('country_phone').get('phone').hasError(validation.type) && (registroForm.get('country_phone').get('phone').dirty || registroForm.get('country_phone').get('phone').touched)">
-                {{ validation.message }}
-              </mat-error>
-            </mat-error>
-          </mat-form-field>
-        </div> -->
-
-
-
-
 
         <button class="submit-btn" color="primary" mat-raised-button type="submit" [disabled]="!registroForm.valid">
           Submit

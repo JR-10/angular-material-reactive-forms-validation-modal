@@ -126,8 +126,9 @@ export class FormsComponent implements OnInit {
 
   createForms() {
     this.registroForm = this.fb.group({
+      productId: new FormControl('', [Validators.required]),
+      operations: this.fb.array([this.createTicket()]),
       reportConfiguration: this.fb.group({
-        productId: new FormControl('', [Validators.required]),
         secretName: new FormControl('', [
           Validators.required,
           Validators.maxLength(200)
@@ -144,8 +145,7 @@ export class FormsComponent implements OnInit {
           Validators.required,
           Validators.maxLength(200)
         ])
-      }),
-      operations: this.fb.array([this.createTicket()])
+      })
     });
   }
 
